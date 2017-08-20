@@ -1,2 +1,5 @@
 test_files
+sorted_test
 info
+*.log
+*#

@@ -172,7 +172,7 @@ for line in $config_file; do
 		log "Files with extension ${ext} will be not touched - find not executed"
     else
 		found_files=`find ${START_DIR} -name "*.${ext}"`
-		log [DEBUG] "Found files: ${found_files}"
+		# log [DEBUG] "Found files: ${found_files}"
 
 	fi
 
@@ -182,8 +182,12 @@ for line in $config_file; do
 		COPY)
 			log "moving files: ${ext}"
 			for movefile in ${found_files}; do
-				movefileto=`echo ${SAVE_DIR}/$(basename $(dirname ${movefile}))/category/$(basename ${movefile})|sed s/\\\/\\\//\\\//g`
+				movefileto=`echo ${SAVE_DIR}/$(basename $(dirname ${movefile}))/${category}/$(basename ${movefile})|sed s/\\\/\\\//\\\//g`
 				log [DEBUG] "moving file ${movefile} to ${movefileto}"
+				if [ ! -d `dirname "${movefileto}"` ] ;then
+					mkdir -p `dirname "${movefileto}"`
+				fi 
+				mv "${movefile}" "${movefileto}"
 
 
 			done	
